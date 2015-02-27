@@ -1,0 +1,110 @@
+﻿@model WebUI.Models.SessionAndOrderDetails
+@using Domain.Entities
+
+@{
+    ViewBag.Title = "Podsumowanie";
+
+    string delivery;
+    if (Model.OrderDetails.DeliveryType == DeliveryTypes.CollectInPerson)
+    {
+        delivery = "Odbiór osobisty";
+    }
+    else if (Model.OrderDetails.DeliveryType == DeliveryTypes.PaymentNow)
+    {
+        delivery = "Płatne przelewem";
+    }
+    else
+    {
+        delivery = "Płatne za pobraniem";
+    }
+}
+<h2>Podsumowanie</h2>
+
+<br />
+@using (Html.BeginForm("Confirmation", "Cart"))
+{
+    <table class="table">
+        <head>@Html.Label("Dane")</head>
+        <tr>
+            <td>Imię</td>
+            <td>
+                @Model.OrderDetails.FirstName
+                @Html.HiddenFor(m => m.OrderDetails.FirstName)
+            </td>
+        </tr>
+        <tr>
+            <td>Nazwisko</td>
+            <td>
+                @Model.OrderDetails.LastName
+                @Html.HiddenFor(m => m.OrderDetails.LastName)
+            </td>
+        </tr>
+        <tr>
+            <td>Ulica</td>
+            <td>
+                @Model.OrderDetails.Street
+                @Html.HiddenFor(m => m.OrderDetails.Street)
+            </td>
+        </tr>
+        <tr>
+            <td>Miasto</td>
+            <td>
+                @Model.OrderDetails.City
+                @Html.HiddenFor(m => m.OrderDetails.City)
+            </td>
+        </tr>
+        <tr>
+            <td>Kod pocztowy</td>
+            <td>
+                @Model.OrderDetails.ZipCode
+                @Html.HiddenFor(m => m.OrderDetails.ZipCode)
+            </td>
+        </tr>
+        <tr>
+            <td>Adres E-Mail</td>
+            <td>
+                @Model.OrderDetails.EmailAdress
+                @Html.HiddenFor(m => m.OrderDetails.EmailAdress)
+            </td>
+        </tr>
+        <tr>
+            <td>Typ przesyłki</td>
+            <td>
+                @delivery
+                @Html.HiddenFor(m => m.OrderDetails.DeliveryType)
+            </td>
+        </tr>
+    </table>
+
+    <table class="table">
+        <tr>
+            <th>Ilość</th>
+            <th>Produkt</th>
+            <th class="text-right">Cena</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Cart.Lines)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td class="text-right">
+                    @Html.Label((item.Quantity * item.Product.Price).ToString("c"))
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3" class="text-right">Suma: @Html.Label(Model.Cart.Lines.Sum(m => m.Quantity * m.Product.Price).ToString("C")) </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-right">Z przesyłką: @Html.Label((Model.Cart.Lines.Sum(m => m.Quantity * m.Product.Price) + (int)Model.OrderDetails.DeliveryType).ToString("C")) </td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Zamów" class="btn btn-success" />
+}

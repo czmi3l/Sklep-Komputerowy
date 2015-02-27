@@ -1,0 +1,22 @@
+﻿@model IEnumerable<string>
+
+@{
+    bool xs = ((bool)(ViewContext.RouteData.Values["xs"] ?? false));
+}
+<br />
+<label>Kategorie:</label>
+@foreach (var element in Model)
+{
+    <div class="btn-group-justified">
+        @Html.RouteLink(element, new
+        {
+            controller = "Product",
+            action = "Index",
+            category = element,
+            page = 1
+        }, new { 
+            @class = xs ? "btn btn-default" : "pull-left btn btn-link", 
+            @style = ViewBag.CurrentCategory == element ? "font-weight: bold" : "" })
+    </div>
+
+}

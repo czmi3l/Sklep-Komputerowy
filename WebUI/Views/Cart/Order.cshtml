@@ -1,0 +1,51 @@
+﻿@using System.Activities.Expressions
+@model Domain.Entities.OrderDetails
+@{
+    ViewBag.Title = "Dane";
+}
+
+<h2>Dane</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+    foreach (var element in ViewData.ModelMetadata.Properties)
+    {
+        if (element.PropertyName != "DeliveryType")
+        {
+            <div>
+                @Html.Label(element.DisplayName)
+            </div>
+            <div>
+                @Html.TextBox(element.PropertyName, null, new {@class = "form-control"})
+            </div>
+        }
+    }
+    <br />
+    
+    <h3>Koszty przesyłki:</h3>
+
+    <table class="table">
+        <tr>
+            <td>
+                @Html.RadioButtonFor(m => m.DeliveryType, 0, new { @checked = "checked" })
+            </td>
+            <td>Odbiór osobisty</td><td>0 zł</td>
+        </tr>
+        <tr>
+            <td>
+                @Html.RadioButtonFor(m => m.DeliveryType, 10)
+            </td>
+            <td>Płatne teraz</td><td>10 zł</td>
+        </tr>
+        <tr>
+            <td>
+                @Html.RadioButtonFor(m => m.DeliveryType, 20)
+            </td>
+            <td>Płatne za pobraniem</td><td>20 zł</td>
+        </tr>
+    </table>
+    
+    <br />
+    <input type="submit" value="Dalej" class="btn btn-default btn-info" />
+}

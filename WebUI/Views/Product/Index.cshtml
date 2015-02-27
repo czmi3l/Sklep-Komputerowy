@@ -1,0 +1,57 @@
+﻿@using System.Configuration
+@using Domain.Entities
+@using PagedList
+@using PagedList.Mvc
+@model IEnumerable<Product>
+
+<style>
+    .left-part {
+        display: inline-block;
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+
+
+@{string temp2 = "~/Content/Images/image_preview.jpg";}
+
+
+@foreach (var element in Model)
+{
+
+
+
+    <div class="well hidden-sm hidden-xs">
+        <img src="@Url.Content("~/Content/Images/" + element.ProductId + ".jpg")" class="img-thumbnail" height="100" width="100" />
+        <div class="left-part">
+            <div>@Html.Label(element.Name)</div>
+            <div>@element.Description</div>
+        </div>
+        <div class="pull-right">
+            <div><label>@element.Price.ToString("C")</label></div>
+            <div>@Html.ActionLink("Do koszyka", "AddToCart", "Cart", new { element.ProductId, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-default" })</div>
+        </div>
+    </div>
+
+
+    <div class="well visible-xs visible-sm">
+        <div>
+            <div>@Html.Label(element.Name)</div>
+            <div>@element.Description</div>
+        </div>
+        <img src="@Url.Content("~/Content/Images/" + element.ProductId + ".jpg")" class="img-thumbnail" height="100" width="100" />
+        <div class="pull-right">
+            <div>@Html.Label(element.Price.ToString("C"))</div>
+            <div>@Html.ActionLink("Do koszyka", "AddToCart", "Cart", new { element.ProductId, returnUrl = Request.Url.PathAndQuery }, new { @class = "btn btn-default" })</div>
+        </div>
+    </div>
+
+}
+
+<div class="pull-right">@Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, p => Url.Action("Index", "Product", new { page = p, category = ViewBag.CurrentCategory }))</div>
+
+

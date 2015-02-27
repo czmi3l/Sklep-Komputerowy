@@ -1,0 +1,4 @@
+﻿@model IEnumerable<Domain.Entities.CartLine>
+
+<div class="navbar-right navbar-text">@Model.Sum(m => m.Quantity * m.Product.Price).ToString("C")</div>
+    <a href=@Url.Action("Index", "Cart") class="glyphicon glyphicon-shopping-cart btn btn-default navbar-btn navbar-right"></a>

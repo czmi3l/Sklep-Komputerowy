@@ -1,0 +1,50 @@
+﻿@using System.Activities.Expressions
+@using Domain.Entities
+@model IEnumerable<Domain.Entities.CartLine>
+
+@{
+    ViewBag.Title = "Koszyk";
+}
+
+<h2>Koszyk</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Ilość
+        </th>
+        <th>
+            Produkt
+        </th>
+        <th class="text-right">
+            Cena
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td class="text-right">
+                @Html.Label((item.Quantity*item.Product.Price).ToString("c"))
+            </td>
+            <td class="text-right">
+                @Html.ActionLink("Usuń", "DeleteFromCart", new {item.Product.ProductId }, new{@class="hidden-xs btn btn-warning"})
+                @Html.ActionLink("Usuń", "DeleteFromCart", new { item.Product.ProductId }, new { @class = "visible-xs btn btn-warning btn-xs" })
+            </td>
+        </tr>
+    }
+    <tr>
+        <td colspan="3" class="text-right">Suma: @Html.Label(Model.Sum(m => m.Quantity*m.Product.Price).ToString("C")) </td>
+    </tr>
+    <tr></tr>
+</table>
+
+<a href=@ViewBag.ReturnUrl class="btn btn-info">Powrót do zakupów</a>
+@Html.ActionLink("Podsumowanie zamówenia", "Order", "Cart",null ,new{@class ="btn btn-info"})
