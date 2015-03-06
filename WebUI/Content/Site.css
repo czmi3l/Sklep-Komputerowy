@@ -17,8 +17,3 @@ select,
 textarea {
     max-width: 280px;
 }
-
-.navbar-right {
-    float: right !important;
-    margin-left: 10px;
-}

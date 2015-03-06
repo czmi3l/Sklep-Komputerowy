@@ -1,0 +1,31 @@
+﻿@using Domain.Entities
+@model IEnumerable<AppUser>
+
+
+@{
+    ViewBag.Title = "Użytkownicy";
+    int i = 0;
+}
+
+<h2>Użytkownicy</h2>
+
+<table class="table">
+    <tr><th>Nr</th><th>ID</th><th>Imię</th>Nazwisko<th></th></tr>
+    @if (!Model.Any())
+    {
+        <tr><td colspan="5">Nie ma żadnych użytkowników</td></tr>
+    }
+    else
+    {
+        foreach (var user in Model)
+        {
+            <tr>
+                <td>@(++i)</td>
+                <td>@user.Id</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+            </tr>
+        }
+    }
+
+</table>

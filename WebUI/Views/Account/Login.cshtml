@@ -1,0 +1,24 @@
+﻿@model WebUI.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Zaloguj się</h2>
+@Html.ValidationSummary()
+@using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.returnUrl }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label>Nazwa użytkownika</label>
+        @Html.TextBoxFor(x => x.Username, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Hasło</label>
+        @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-default">Zaloguj</button>
+}
+<br/>
+@Html.ActionLink("Nie pamiętam hasła", "ResetPassword", "Account")

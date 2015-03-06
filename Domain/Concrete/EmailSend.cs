@@ -35,10 +35,10 @@ namespace Domain.Concrete
             body.AppendLine("Ulica: " + orderDetails.Street);
             body.AppendLine("Kod pocztowy: " + orderDetails.ZipCode);
             body.AppendLine("Miasto: " + orderDetails.City);
-            body.AppendLine("Adres E-Mail: " + orderDetails.EmailAdress);
+            body.AppendLine("Adres E-Mail: " + orderDetails.Email);
             body.AppendLine("===================================");
 
-            using (MailMessage mail = new MailMessage(fromAddress, orderDetails.EmailAdress))
+            using (MailMessage mail = new MailMessage(fromAddress, orderDetails.Email))
             {
                 mail.Subject = subject;
                 mail.Body = body.ToString();

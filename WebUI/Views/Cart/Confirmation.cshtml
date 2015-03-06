@@ -23,6 +23,7 @@
 <br />
 @using (Html.BeginForm("Confirmation", "Cart"))
 {
+    @Html.AntiForgeryToken()
     <table class="table">
         <head>@Html.Label("Dane")</head>
         <tr>
@@ -40,7 +41,7 @@
             </td>
         </tr>
         <tr>
-            <td>Ulica</td>
+            <td>Ulica i numer domu</td>
             <td>
                 @Model.OrderDetails.Street
                 @Html.HiddenFor(m => m.OrderDetails.Street)
@@ -63,8 +64,8 @@
         <tr>
             <td>Adres E-Mail</td>
             <td>
-                @Model.OrderDetails.EmailAdress
-                @Html.HiddenFor(m => m.OrderDetails.EmailAdress)
+                @Model.OrderDetails.Email
+                @Html.HiddenFor(m => m.OrderDetails.Email)
             </td>
         </tr>
         <tr>

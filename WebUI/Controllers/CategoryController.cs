@@ -16,6 +16,7 @@ namespace WebUI.Controllers
             repository = repo;
         }
         // GET: Category
+        [ChildActionOnly]
         public PartialViewResult Index(string category = null)
         {
             ViewBag.CurrentCategory = category;
